@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta name="viewport" content="width=device-width initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="F:/Riji/Bootstrap/bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="F:/Riji/Bootstrap/fontawesome-free-5.10.1-web/css/all.min.CSS">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <style>
+        /* body {
+            /* width: 100%;
+            height: 100%; */
+        /* background-image: url("blue.jpg");
+            } */
+
+
+
+        .form-bg {
+            background-color: ivory;
+            border: 3px solid olive;
+            background-image: url("blue.jpg");
+
+        }
+
+        form-control {
+            background-color: palegoldenrod;
+            padding: 4px;
+            margin: 4px;
+        }
+    </style>
+</head>
+
+<body onload="dispTab()">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12 mt-5">
+
+                        <input id="key" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                        <button class="mt-1 btn btn-rounded bg-info form-control" onclick="searching()">Search</button>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-6 form-bg text-center">
+                <div class="form-data">
+                    <div class="form-head">
+                        <label>My ToDo List</label>
+                    </div>
+                    <div class="form-body text-center">
+                        <div class="row form-row">
+                            <label class="pl-5 ml-5s">Name</label>
+                        </div>
+                        <div class="row form-row">
+                            <input type="text" id="name" class="form-control pl-5">
+                        </div>
+                        <div class="row form-row">
+                            <label class="pl-5">catogory</label>
+                        </div>
+                        <div class="row form-row">
+                            <select id="cat" class="form-control" name="cat">
+                                <option></option>
+                                <option>study</option>
+                                <option>work</option>
+                                <option>personal </option>
+
+                            </select>
+                        </div>
+                        <!-- <div class="row form-row dropdown text-center">
+                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Select Category
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Study</a></li>
+                                <li><a href="#">Work</a></li>
+                                <li><a href="#">Personal</a></li>
+                              </ul>
+                            
+                        </div> -->
+                        <div class="row form-row">
+                            <label class="pl-5">Priority</label>
+                        </div>
+                        <div class="row form-row">
+                            <div class=col-4>
+                                <input id="low" type="radio" checked="false" name="prio">Low</radio>
+                            </div>
+                            <div class=col-4>
+                                <input id="med" type="radio" checked="false" name="prio">Medium</radio>
+                            </div>
+                            <div class=col-4>
+                                <input id="high" type="radio" checked="false" name="prio">High</radio>
+                            </div>
+                        </div>
+                        <div class="row form-row">
+                            <label class="text-center  pl-5">Start Date</label>
+                        </div>
+                        <div class="row form-row">
+                            <input id="sdate" class="pl-5 form-control" type="date">
+                        </div>
+                        <div class="row form-row">
+                            <label class="pl-5">End Date</label>
+                        </div>
+                        <div class="row form-row">
+                            <input id="edate" class="pl-5 form-control" type="date">
+                        </div>
+
+                        <div class="row form-row">
+                            <button id="sub" onclick="store()" class="btn-info btn-lg btn-block">SUBMIT</button>
+                        </div>
+                        <div class="row form-row">
+                            <button id="up" onclick="update()" class="btn-info btn-lg btn-block">UPDATE</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col-3">
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <button id="up" onclick="location.reload()" class="btn-info btn-lg btn-block">All Tasks</button>
+                        <button id="comp" onclick="completed('Completed')" class="btn-info btn-lg btn-block">Completed Tasks</button>
+                        <button id="notComp" onclick="completed('NotCompleted')" class="btn-info btn-lg btn-block">Not Completed Tasks</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-center pt-5">
+        <div class="row">
+            <div class="col-12 text-center">
+                <table class="table" id="mytab">
+                    <thead>
+                        <tr class="bg-info">
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Category</td>
+                            <td>Priority</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
+                            <td>Status</td>
+                            <td>Edit/Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody id="myhead">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <table class="table" id="searchTab">
+                    <thead>
+                        <tr class="bg-info">
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Category</td>
+                            <td>Priority</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
+                            <td>Status</td>
+                            <td>Edit/Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody id="searchHead">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        var idToUpdate, dataRead;
+        //Function to Store The Datas into Local Storage
+        function store() {
+            var res = valid();
+            //alert(res);
+            var idnew = getIdNew()
+            if (res == "name")
+                alert("Name to be Filled");
+            else if (res == "cat")
+                alert("Select Category");
+            else if (res == "sdate")
+                alert("select Start Date")
+            else if (res == "edate")
+                alert("select EndDate");
+            else if (res=="datemismatch")
+            alert("Starting Date Should be before the End Date");
+            else{
+                window.localStorage.setItem(idnew, res);
+                location.reload();
+
+            }
+        }
+
+        //function to display the table
+        function dispTab() {
+
+            document.getElementById("sub").hidden = false;
+            document.getElementById("up").hidden = true;
+            var keyArray = Object.keys(localStorage);
+            var tab = document.getElementById("mytab");
+            tab.hidden = false;
+            var sTab = document.getElementById("searchTab");
+            sTab.hidden = true;
+            // var tabrows = tab.getElementsByTagName("tr");
+            // for (k = 1; k < tabrows.length; k++)
+            //     tab.removeChild(tabrows[k]);
+            for (var i = 0; i < keyArray.length; i++) {
+                var myrow = tab.insertRow(i + 1);
+
+                var j = 0;
+
+                var val = window.localStorage.getItem(keyArray[i]);
+                var c1 = myrow.insertCell(0);
+                var newtext = document.createTextNode(keyArray[i]);
+                c1.appendChild(newtext);
+
+                var itms = val.split(":");
+
+                for (j = 0; j < itms.length; j++) {
+
+                    //var mycell = tab.myrow.insertCell(j);
+                    // var mycell=tab.myrow.insertCell(j);
+                    var c2 = myrow.insertCell(j + 1);
+                    var newtext = document.createTextNode(itms[j]);
+                    c2.appendChild(newtext);
+                }
+
+                var c2 = myrow.insertCell(j + 1);
+                var newcheck = document.createElement("input");
+                newcheck.setAttribute("type", "checkbox");
+                newcheck.setAttribute("onclick", "check(this)");
+                // newcheck.setAttribute("text","completed");
+                var newtext = document.createTextNode("Completed");
+                newcheck.appendChild(newtext);
+                if (itms[5] == "Completed")
+                    newcheck.setAttribute("checked", true);
+                c2.appendChild(newcheck);
+
+                var newbutn = document.createElement("Button");
+                newbutn.setAttribute("class", "bg-info");
+                newbutn.setAttribute("onclick", "retriveData(this)")
+                if (itms[5] == "Completed")
+                    newbutn.disabled = true;
+                var newtext = document.createTextNode("Edit");
+                newbutn.appendChild(newtext);
+                c2.appendChild(newbutn);
+
+                var newbutn = document.createElement("Button");
+                newbutn.setAttribute("class", "bg-info");
+                newbutn.setAttribute("onclick", "del(this)")
+                var newtext = document.createTextNode("Delete");
+                newbutn.appendChild(newtext);
+                c2.appendChild(newbutn);
+            }
+        }
+        //function to search an item
+        function searching() {
+            var str = document.getElementById("key").value;
+            var tab = document.getElementById("mytab");
+            tab.hidden = true;
+            var shead = document.getElementById("searchHead");
+            var sTab = document.getElementById("searchTab");
+            sTab.hidden = false;
+        shead.innerHTML="";
+            var keyArray = Object.keys(localStorage);
+            //var regExp = New RegExp("[a-z]*"+str+"[a-z]*");
+            str=str.toLowerCase()
+            var regexp = new RegExp(str);
+            for (var i = 0; i < keyArray.length; i++) {
+                var val = window.localStorage.getItem(keyArray[i]);
+                
+                if (regexp.test(val.toLowerCase()))
+                {
+                   
+                    var myrow = shead.insertRow(0);
+
+                    var j = 0;
+                    var c1 = myrow.insertCell(0);
+                    var newtext = document.createTextNode(keyArray[i]);
+                    c1.appendChild(newtext);
+                    var itms = val.split(":");
+                    for (j = 0; j < itms.length; j++) {
+
+                       
+
+                        //var mycell = tab.myrow.insertCell(j);
+                        // var mycell=tab.myrow.insertCell(j);
+                        var c2 = myrow.insertCell(j + 1);
+                        var newtext = document.createTextNode(itms[j]);
+                        c2.appendChild(newtext);
+                    }
+
+                    var c2 = myrow.insertCell(j + 1);
+                    var newcheck = document.createElement("input");
+                    newcheck.setAttribute("type", "checkbox");
+                    newcheck.setAttribute("onclick", "check(this)");
+                    // newcheck.setAttribute("text","completed");
+                    var newtext = document.createTextNode("Completed");
+                    newcheck.appendChild(newtext);
+                    if (itms[5] == "Completed")
+                        newcheck.setAttribute("checked", true);
+                    c2.appendChild(newcheck);
+
+                    var newbutn = document.createElement("Button");
+                    newbutn.setAttribute("class", "bg-info");
+                    newbutn.setAttribute("onclick", "retriveData(this)")
+                    if (itms[5] == "Completed")
+                        newbutn.disabled = true;
+                    var newtext = document.createTextNode("Edit");
+                    newbutn.appendChild(newtext);
+                    c2.appendChild(newbutn);
+
+                    var newbutn = document.createElement("Button");
+                    newbutn.setAttribute("class", "bg-info");
+                    newbutn.setAttribute("onclick", "del(this)")
+                    var newtext = document.createTextNode("Delete");
+                    newbutn.appendChild(newtext);
+                    c2.appendChild(newbutn);
+                }
+
+
+            }
+        }
+        function completed(str)
+        {
+            
+            var tab = document.getElementById("mytab");
+            tab.hidden = true;
+            var shead = document.getElementById("searchHead");
+            var sTab = document.getElementById("searchTab");
+            sTab.hidden = false;
+        shead.innerHTML="";
+            var keyArray = Object.keys(localStorage);
+            //var regExp = New RegExp("[a-z]*"+str+"[a-z]*");
+            for (var i = 0; i < keyArray.length; i++) {
+                var dataRead = window.localStorage.getItem(keyArray[i]);
+                var dataArray = dataRead.split(":");
+
+                if (dataArray[5]==str)
+                {
+                   
+                    var myrow = shead.insertRow(0);
+
+                    var j = 0;
+                    var c1 = myrow.insertCell(0);
+                    var newtext = document.createTextNode(keyArray[i]);
+                    c1.appendChild(newtext);
+                    var itms = dataRead.split(":");
+                    for (j = 0; j < itms.length; j++) {
+
+                       
+
+                        //var mycell = tab.myrow.insertCell(j);
+                        // var mycell=tab.myrow.insertCell(j);
+                        var c2 = myrow.insertCell(j + 1);
+                        var newtext = document.createTextNode(itms[j]);
+                        c2.appendChild(newtext);
+                    }
+
+                    var c2 = myrow.insertCell(j + 1);
+                    var newcheck = document.createElement("input");
+                    newcheck.setAttribute("type", "checkbox");
+                    newcheck.setAttribute("onclick", "check(this)");
+                    // newcheck.setAttribute("text","completed");
+                    var newtext = document.createTextNode("Completed");
+                    newcheck.appendChild(newtext);
+                    if (itms[5] == "Completed")
+                        newcheck.setAttribute("checked", true);
+                    c2.appendChild(newcheck);
+
+                    var newbutn = document.createElement("Button");
+                    newbutn.setAttribute("class", "bg-info");
+                    newbutn.setAttribute("onclick", "retriveData(this)")
+                    if (itms[5] == "Completed")
+                        newbutn.disabled = true;
+                    var newtext = document.createTextNode("Edit");
+                    newbutn.appendChild(newtext);
+                    c2.appendChild(newbutn);
+
+                    var newbutn = document.createElement("Button");
+                    newbutn.setAttribute("class", "bg-info");
+                    newbutn.setAttribute("onclick", "del(this)")
+                    var newtext = document.createTextNode("Delete");
+                    newbutn.appendChild(newtext);
+                    c2.appendChild(newbutn);
+                }
+
+            }
+        }
+
+        
+
+        //function to generate Unique IdBy Using current date and Time
+        function getIdNew() {
+            var today = new Date();
+            var date = today.getFullYear() + '' + (today.getMonth() + 1) + '' + today.getDate() + "" + today.getHours() + "" + today.getMinutes() + "" + today.getSeconds();
+            return (date);
+        }
+        //function to delete record from local storage
+        function del(e) {
+            var cel = e.parentNode.parentNode.firstChild.innerHTML;
+            localStorage.removeItem(cel);
+            location.reload();
+        }
+        //fuction to retrieve record in local storage
+        function retriveData(x) {
+            var cel = x.parentNode.parentNode.firstChild.innerHTML;
+            idToUpdate = cel;
+            dataRead = localStorage.getItem(cel);
+            var dataArray = dataRead.split(":");
+            document.getElementById("name").value = dataArray[0];
+            document.getElementById("cat").value = dataArray[1];
+            if (dataArray[2] == "low")
+                document.getElementById("low").checked = true;
+            if (dataArray[2] == "medium")
+                document.getElementById("med").checked = true;
+            if (dataArray[2] == "high")
+                document.getElementById("high").checked = true;
+            document.getElementById("sdate").value = dataArray[3];
+            document.getElementById("edate").value = dataArray[4];
+            document.getElementById("sub").hidden = true;
+            document.getElementById("up").hidden = false;
+            //location.reload();
+        }
+        //function to Update the content of Local storage
+        function update() {
+
+            var res = valid();
+            if (res == "name")
+                alert("Name to be Filled");
+            else if (res == "cat")
+                alert("Select Category");
+            else if (res == "sdate")
+                alert("select Start Date")
+            else if (res == "edate")
+                alert("select EndDate");
+                else if(res == "datemismatch")
+                alert("Starting Date Should be before the End Date");
+            else {
+
+                localStorage.setItem(idToUpdate, res);
+                location.reload();
+            }
+        }
+        function check(y) {
+            if (y.checked == true)
+                y.nextSibling.disabled = true;
+            else
+                y.nextSibling.disabled = false;
+            change(y);
+
+            // localStorage.setItem(idToUpdate,res);
+            //location.reload();
+        }
+        //function to change completed task
+        function change(z) {
+            console.log(z.parentNode.parentNode.firstChild.innerHTML)
+            var cel = z.parentNode.parentNode.firstChild.innerHTML;
+            idTochange = cel;
+            dataRead = localStorage.getItem(cel);
+            var dataArray = [];
+            dataArray = dataRead.split(":");
+            if (z.checked == true) {
+                dataArray[5] = "Completed";
+                var newData = dataArray.join(":");
+            }
+            if (z.checked == false) {
+                dataArray[5] = "NotCompleted";
+                var newData = dataArray.join(":");
+            }
+            localStorage.setItem(idTochange, newData);
+            location.reload();
+        }
+        //function for validation
+        function valid() {
+            var i = 0,dateflag=0;
+            var p;
+            var n = document.getElementById("name").value;
+            var cat = document.getElementById("cat");
+            var catval = cat.value
+            if (document.getElementById("low").checked == true)
+                p = "low"
+            else if (document.getElementById("med").checked == true)
+                p = "medium"
+            else
+                p = "high"
+            var sdate = document.getElementById("sdate").value;
+            var edate = document.getElementById("edate").value;
+            
+            var spsdate=sdate.split("-");
+            var spedate=edate.split("-");
+            if(spsdate[0]==spedate[0])
+            {
+            if(spsdate[1]==spedate[1])
+            {
+                if(spsdate[2]>spedate[2])
+                dateflag=1;
+            }
+            }
+            else if(spsdate[0]>spedate[0])
+            {
+                dateflag=1;
+            }
+            else
+            dateflag=0;
+            var res = n + ":" + catval + ":" + p + ":" + sdate + ":" + edate + ":NotCompleted";
+            if ((n != "") && (catval != "") && (sdate != "") && (edate != "")&&(dateflag==0))
+                return (res);
+            else if (n == "")
+                return ("name");
+            // alert("Name to be Filled");
+            else if (catval == "")
+                return ("cat");
+            // alert("Select Category");
+            else if (sdate == "")
+                return ("sdate");
+            //alert("select Start Date")
+            else if(edate=="")
+                return ("edate");
+                else
+                return("datemismatch");
+            // alert("select EndDate");
+
+        }
+    </script>
+</body>
+
+</html>

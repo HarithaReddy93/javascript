@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do list</title>
+    <link rel="stylesheet" href="todo_style.css">
+</head>
+<body>
+<nav>
+    <h1>My Tasks</h1>
+</nav>
+<div >
+<h1 style="margin-left: 2%;">My ToDo List</h1>
+<table id="update_task">
+<thead>
+    <td> Name </td>
+    <td>Category</td>
+    <td>Date</td>
+    <td>Complete</td>
+</thead>
+
+</table>
+<button type="submit">Update Tasks</button>
+</div>
+<div id="new_task">
+    <label for="Item_name"> Item name:</label> <input type="text" name="Item name" id="Item_name"> <br> 
+    <label for="Item_Category"> Item Category: </label>  <input type="text" name="Item category" id="Item_Category"><br>
+    <input type="button" value="Add item" onclick="addlist(update_task);">
+</div>
+
+
+
+
+
+    <script src="todo_script.js"></script>
+</body>
+</html>

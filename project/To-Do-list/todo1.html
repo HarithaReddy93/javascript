@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo using table row</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            margin: 5%;
+            width: 90%;
+        }
+        td{
+            border: 1px solid rgb(6, 65, 62);
+            width: 25%;
+            padding: 1%;
+            font-size: large;
+            height: 1.5rem;
+        }
+        h1{
+            background-color: rgb(121, 187, 248);
+            color: rgb(5, 10, 82);
+            padding: 1%;
+        }
+        
+        table tr:nth-child(odd), table tr:nth-child(odd) input{
+            background-color: rgb(121, 187, 248);
+        }
+        table tr:nth-child(even){
+            background-color: white;
+        }
+        #input_form{
+            margin: 5%;
+            width: 50%;
+            margin-left: 22%;
+            background-color:rgb(121, 187, 248);
+            padding: 2%;
+        }
+        #input_form input{
+            width: 96%;
+            margin: 0% 2% 2%;
+            height: 2rem;
+        }
+        #input_form input[type=button]{
+            width: 10%;
+        }
+        label{
+            margin-left: 2%;
+
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My To-Do List</h1>
+    <table id="ToDoListTable"  style="border: 1px solid black;">
+        <tr>
+            <td>Name</td>
+            <td>Category</td>
+            <td>Date</td>
+            <td>Complete</td>
+        </tr>
+    </table>
+    <div id="input_form">
+        <label for="txt1">Item Name:</label>
+        <input type="text" id="txt1"> <br>
+        <label for="txt2">Item Category:</label>
+        <input type="text"  id="txt2"> <br>
+        <label for="mydate">Date:</label>
+        <input type="date" name="date" id="mydate"> <br>
+        <input type="button" value="Add Item" onclick="addList('ToDoListTable')" />
+    </div>
+ 
+    <!-- <input type="button" value="Delete List" onclick="deleteList('ToDoListTable')" /> -->
+    
+
+<!-- Total Work pending= <a id="pTotal"></a>   -->
+<script>
+    
+function addList(myTable) {
+
+var table = document.getElementById(myTable);
+var rowCount = table.rows.length;
+var row = table.insertRow(rowCount);
+
+//Item Name
+var ItemName=document.getElementById('txt1').value;
+var cell1 = row.insertCell(0);
+var element1 = document.createElement("input");
+element1.type = "text";
+element1.style.width="100%";
+element1.name = "ItemName";
+element1.style.border="transparent";
+element1.value=ItemName;
+cell1.appendChild(element1);
+
+
+//Item Category
+var ItemCategory=document.getElementById('txt2').value;
+if(ItemCategory!=""){
+var cell2 = row.insertCell(1);
+var element2 = document.createElement("input");
+element2.type = "dropdown";
+element2.style.width="100%";
+element2.name = "ItemCategory";
+element2.style.border="transparent";
+element2.value=ItemCategory;
+cell2.appendChild(element2);
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+  // Store
+  localStorage.setItem("element2", ItemCategory);
+  // Retrieve
+//   document.getElementById("").innerHTML = localStorage.getItem("element1");
+} else {
+  document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+}else{
+    alert("Enter the Category field");
+}
+
+//Date
+var date=document.getElementById("mydate").value;
+var cell3=row.insertCell(2);
+var element3=document.createElement('input');
+element3.type="date";
+element3.style.width="100%";
+element3.name="mydate";
+element3.style.border="transparent";
+element3.value=date;
+cell3.appendChild(element3);
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+  // Store
+  localStorage.setItem("element3", date);
+  // Retrieve
+//   document.getElementById("").innerHTML = localStorage.getItem("element1");
+} else {
+  document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+//Checkbox
+var cell4 = row.insertCell(3);
+var element4 = document.createElement("input");
+element4.type = "checkbox";
+element3.style.width="100%";
+element4.name="checkbox";
+cell4.appendChild(element4);
+document.getElementById('txt1').value=" ";
+document.getElementById('txt2').value=" ";
+document.getElementById('mydate').value=" ";
+// document.getElementById('pTotal').innerHTML= rowCount + 1;
+}
+for(i=0;i<=rowCount;i++){
+var arr=[
+    {"name":element1, "category":element2,"date":element3}
+];
+}
+
+// Check browser support
+if (typeof(Storage) !== "undefined") {
+  // Store
+  localStorage.setItem("element1", ItemName);
+  // Retrieve
+//   document.getElementById("").innerHTML = localStorage.getItem("element1");
+} else {
+  document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+}
+
+
+
+
+
+
+function deleteList(checked) {
+
+var table = document.getElementById(myTable);
+var rowCount = table.rows.length;
+
+for(var i=0; i<rowCount; i++) {
+    var row = table.rows[i];
+    var chkbox = row.cells[1].childNodes[0];
+    if(null != chkbox && true == chkbox.checked) {
+        table.deleteRow(i);
+        rowCount--;
+        i--;
+
+// document.getElementById('pTotal').innerHTML= rowCount;
+
+}
+}
+}
+</script>
+</body>
+</html>
